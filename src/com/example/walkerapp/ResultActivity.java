@@ -1,5 +1,6 @@
 package com.example.walkerapp;
 
+import edu.umass.cs.gns.client.DesktopGnsClient;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +25,12 @@ public class ResultActivity extends Activity {
 		String result = myBundle.getString(ResultActivity.BUNDLE_RESULT);
 		//String result = myBundle.getString("gnsid");
 		txtAnswer.setText(result);
-
+		String host = "ananas.cs.umass.edu";
+		int port = 8080;
+		 
+		DesktopGnsClient client = new DesktopGnsClient(host, port);
+	    Log.d("Client connected to GNS at " + host + ":",host);
+		
 		/*float number1 = myBundle.getInt("n1");
 		float number2 = myBundle.getInt("n2");
 		int operation = myBundle.getInt("opp");

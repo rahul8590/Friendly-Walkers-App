@@ -1,4 +1,5 @@
 package com.example.walkerapp;
+import edu.umass.cs.gns.client.DesktopGnsClient;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import edu.umass.cs.gns.client.DesktopGnsClient;
+
 
 public class MainActivity extends Activity {
 
@@ -57,11 +58,9 @@ public class MainActivity extends Activity {
 			Log.d("ResultActivity", "value");
 			//String number2 = etxtNum2.getText().toString();
 			
-			 String host = "ananas.cs.umass.edu";
-			 int port = 8080;
+			 
 
-			DesktopGnsClient client = new DesktopGnsClient(host, port);
-		    Log.d("Client connected to GNS at " + host + ":",host);
+			
 
 			//int n1 = Integer.parseInt(number1);
 			//int n2 = Integer.parseInt(number2);
