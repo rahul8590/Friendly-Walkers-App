@@ -2,6 +2,7 @@ package com.example.walkerapp;
 
 import edu.umass.cs.gns.client.DesktopGnsClient;
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -25,22 +26,15 @@ public class ResultActivity extends Activity {
 		String accountId = myBundle.getString(ResultActivity.BUNDLE_RESULT);
 		//String result = myBundle.getString("gnsid");
 		//txtAnswer.setText(accountId);
-		String host = "gns.name";
-		int port = 8080;
-		 
-		DesktopGnsClient client = new DesktopGnsClient(host, port);
-	    Log.d("Client connected to GNS at " + host + ":",host);
 		
 	    try {
-	    	String guid = client.lookupGuid("rahul8590@gmail.com");
-	    	txtAnswer.setText("Retrieved GUID for " + guid);
-	    	 
+	    	String result = new loadguid().execute("rahul8590@gmail.com").get();
+		    txtAnswer.setText(result);
+	    } catch (Exception e) {
+	    	Log.d("asynch task is scrwed up", "asynch task is screwed up ");
 	    }
-	    catch (Exception e) {
-	    	txtAnswer.setText("Unable to retrieve guid or account doesnt exist");
-	    	Log.d("error" + e ,"error");
-	    }
-	   
+	    
+	    
 	    
 	    /*float number1 = myBundle.getInt("n1");
 		float number2 = myBundle.getInt("n2");
@@ -59,5 +53,26 @@ public class ResultActivity extends Activity {
 	//			txtAnswer.setText(answerStr);
 	//	Log.d("ResultActivity","Answer Printed to Screen");
 		
+	}
+	
+	public class loadguid extends AsyncTask <String, Integer, String> {
+		
+		String host = "gns.name";
+		int port = 8080;
+		
+		@Override
+		protected String doInBackground(String...paramas){
+			try {
+				DesktopGnsClient client = new DesktopGnsClient(host, port);
+			    Log.d("Client connected to GNS at " + host + ":",host);
+				String guid = client.lookupGuid("rahul8590@gmail.com");
+				return guid;
+			} catch (Exception e) {
+		    	//txtAnswer.setText("Unable to retrieve guid or account doesnt exist");
+		    	Log.d("error" + e ,"error");
+		    	return "Unable to reterive";
+		    }
+		   	
+		}
 	}
 }
