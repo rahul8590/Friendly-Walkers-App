@@ -57,7 +57,7 @@ public class ResultActivity extends Activity {
 	
 	public class loadguid extends AsyncTask <String, Integer, String> {
 		
-		String host = "gns.name";
+		String host = "ananas.cs.umass.edu";
 		int port = 8080;
 		
 		@Override
