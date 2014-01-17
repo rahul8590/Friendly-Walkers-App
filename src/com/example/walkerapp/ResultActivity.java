@@ -1,6 +1,7 @@
 package com.example.walkerapp;
 
-import edu.umass.cs.gns.client.DesktopGnsClient;
+//import edu.umass.cs.gns.client.DesktopGnsClient;
+import edu.umass.cs.gns.client.android.AndroidGnsClient;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,16 +27,18 @@ public class ResultActivity extends Activity {
 		String accountId = myBundle.getString(ResultActivity.BUNDLE_RESULT);
 		//String result = myBundle.getString("gnsid");
 		//txtAnswer.setText(accountId);
+		String host = "ananas.cs.umass.edu";
+		int port = 8080;
 		
 	    try {
-	    	String result = new loadguid().execute("rahul8590@gmail.com").get();
-		    txtAnswer.setText(result);
+//	    	String result = new loadguid().execute("rahul8590@gmail.com").get();
+	    	AndroidGnsClient client = new AndroidGnsClient(host, port);
+		    Log.d("Client connected to GNS at " + host + ":",host);
+		    String guid = client.lookupGuid(accountId);
+		    txtAnswer.setText(guid);
 	    } catch (Exception e) {
 	    	Log.d("asynch task is scrwed up", "asynch task is screwed up ");
-	    }
-	    
-	    
-	    
+	    }	    
 	    /*float number1 = myBundle.getInt("n1");
 		float number2 = myBundle.getInt("n2");
 		int operation = myBundle.getInt("opp");
@@ -55,24 +58,16 @@ public class ResultActivity extends Activity {
 		
 	}
 	
-	public class loadguid extends AsyncTask <String, Integer, String> {
-		
-		String host = "ananas.cs.umass.edu";
-		int port = 8080;
-		
+	/*public class loadguid extends AsyncTask <String, Integer, String> {
 		@Override
 		protected String doInBackground(String...paramas){
 			try {
-				DesktopGnsClient client = new DesktopGnsClient(host, port);
-			    Log.d("Client connected to GNS at " + host + ":",host);
-				String guid = client.lookupGuid("rahul8590@gmail.com");
 				return guid;
 			} catch (Exception e) {
 		    	//txtAnswer.setText("Unable to retrieve guid or account doesnt exist");
 		    	Log.d("error" + e ,"error");
-		    	return "Unable to reterive";
+		    	return "Unable to fetch";
 		    }
-		   	
 		}
-	}
+	}*/
 }
