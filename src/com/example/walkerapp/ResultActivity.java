@@ -22,16 +22,27 @@ public class ResultActivity extends Activity {
 		txtAnswer = (TextView)findViewById(R.id.txtResult);
 		Bundle myBundle = getIntent().getExtras();
 
-		String result = myBundle.getString(ResultActivity.BUNDLE_RESULT);
+		String accountId = myBundle.getString(ResultActivity.BUNDLE_RESULT);
 		//String result = myBundle.getString("gnsid");
-		txtAnswer.setText(result);
-		String host = "ananas.cs.umass.edu";
+		//txtAnswer.setText(accountId);
+		String host = "gns.name";
 		int port = 8080;
 		 
 		DesktopGnsClient client = new DesktopGnsClient(host, port);
 	    Log.d("Client connected to GNS at " + host + ":",host);
 		
-		/*float number1 = myBundle.getInt("n1");
+	    try {
+	    	String guid = client.lookupGuid("rahul8590@gmail.com");
+	    	txtAnswer.setText("Retrieved GUID for " + guid);
+	    	 
+	    }
+	    catch (Exception e) {
+	    	txtAnswer.setText("Unable to retrieve guid or account doesnt exist");
+	    	Log.d("error" + e ,"error");
+	    }
+	   
+	    
+	    /*float number1 = myBundle.getInt("n1");
 		float number2 = myBundle.getInt("n2");
 		int operation = myBundle.getInt("opp");
 		if(operation==1)
