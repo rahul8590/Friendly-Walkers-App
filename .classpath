@@ -5,7 +5,6 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry kind="lib" path="libs/gns-lib-1.4b-2013-11-15.jar"/>
-	<classpathentry kind="lib" path="libs/geodesy.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/msocketGeocast-0.1-2014-01-20.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

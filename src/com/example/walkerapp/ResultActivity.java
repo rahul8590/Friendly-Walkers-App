@@ -3,6 +3,9 @@ package com.example.walkerapp;
 //import edu.umass.cs.gns.client.DesktopGnsClient;
 import edu.umass.cs.gns.client.android.AndroidGnsClient;
 import edu.umass.cs.gns.geodesy.GlobalPosition;
+import edu.umass.cs.msocket.multicast.MSocketGroupMember;
+import edu.umass.cs.msocket.multicast.MSocketGroupMemberInputStream;
+import edu.umass.cs.msocket.multicast.MSocketGroupWriter;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -10,9 +13,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.location.Location;
+
 import android.location.LocationListener;
 import android.location.LocationManager;
 
+import android.widget.Toast;
+import android.content.Context;
+import android.app.Application;
+
+//import edu.umass.cs.msocket.multicast.*;
 
 class MyLocationListener implements LocationListener {  
 	  
@@ -26,6 +35,7 @@ class MyLocationListener implements LocationListener {
         loc.getLongitude();  
         latitude=loc.getLatitude();  
         longitude=loc.getLongitude();  
+        
     }  
   
     @Override  
@@ -43,15 +53,6 @@ class MyLocationListener implements LocationListener {
     {  
     }  
 }
-
-
-
-
-
-
-
-
-
 
 public class ResultActivity extends Activity {
 	
@@ -79,6 +80,8 @@ public class ResultActivity extends Activity {
 		int port = 8080;
 		String ftext ;
 		
+		
+		
 	    try {
 //	    	String result = new loadguid().execute("rahul8590@gmail.com").get();
 	    	AndroidGnsClient client = new AndroidGnsClient(host, port);
@@ -94,7 +97,8 @@ public class ResultActivity extends Activity {
 		    	double lat = MyLocationListener.latitude;
 		    	double log = MyLocationListener.longitude;
 		    	ftext = String.valueOf(lat) + String.valueOf(log);
-		    	
+		    	int duration = Toast.LENGTH_LONG;
+		    	Toast.makeText(getApplicationContext(), ftext, duration);
 		    } else {
 		    	// Alert to enable GPS in phone
 		    	ftext = "GPS is disabled";
@@ -102,11 +106,40 @@ public class ResultActivity extends Activity {
 		    /* Get current location and set long and lat
 		    client.setLocation(longitude, latitude, guid)
 		    */
-		    txtAnswer.setText(guid + ftext);
+		    txtAnswer.setText(guid +'\n'+ ftext);
 	    } catch (Exception e) {
 	    	Log.d("asynch task is scrwed up", "unable to fetch data");
 	    	txtAnswer.setText("bad account");
 	    }	    	
+	}
+	
+	
+	class GroupMemberApp {
+		public String localName = "rahul8590";
+		public String attr = "dept";
+		public String value = "cs";
+		
+		public void init() throws Exception {
+			MSocketGroupMember groupMember =  new MSocketGroupMember(localName);
+			groupMember.setAttributes("dept", "cs");
+			MSocketGroupMemberInputStream min = (MSocketGroupMemberInputStream) groupMember.getInputStream();
+			
+			//groupMember.setLocation(lat,log);
+			 //MSocketGroupWriter groupWriter =  new MSocketGroupWriter(writerName);
+			 ///groupWriter.
+			
+			while(true) {
+				
+				byte[] b =  min.readAny();
+				if(b!=null)
+				{
+					System.out.println(new String(b));
+					// Should be text view instead of system console
+				}
+				Thread.sleep(2000);
+			}
+		}
+		
 	}
 	
 	/*public class loadguid extends AsyncTask <String, Integer, String> {
