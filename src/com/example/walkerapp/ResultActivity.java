@@ -8,9 +8,13 @@ import edu.umass.cs.msocket.multicast.MSocketGroupMemberInputStream;
 import edu.umass.cs.msocket.multicast.MSocketGroupWriter;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 import android.location.Location;
 
@@ -61,16 +65,40 @@ public class ResultActivity extends Activity {
 	private TextView txtAnswer;
 	
 	private float Answer;
+	private Button readbtn;
+	private Button writebtn;
 	
+	
+	
+	private OnClickListener write_member = new OnClickListener(){
+		@Override
+		public void onClick(View v) {
+			Intent myIntent = new Intent(getApplicationContext(),WriteActivity.class);	
+			Log.d("ResultActivity","Starting Write Activity");
+			startActivity(myIntent);
+		}
+    };
+
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
+		
+		
+		
 		Log.d("ResultActivity","Result Activity Launched");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_result);
 
 		txtAnswer = (TextView)findViewById(R.id.txtResult);
+		readbtn = (Button)findViewById(R.id.read_button);
+		writebtn = (Button)findViewById(R.id.write_button);
+		
+		writebtn.setOnClickListener(write_member);
+		
+		
+		
 		Bundle myBundle = getIntent().getExtras();
 
 		String accountId = myBundle.getString(ResultActivity.BUNDLE_RESULT);

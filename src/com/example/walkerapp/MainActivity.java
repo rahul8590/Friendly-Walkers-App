@@ -57,11 +57,6 @@ public class MainActivity extends Activity {
 			String gnsid = etxtNum1.getText().toString();
 			Log.d("ResultActivity", "value");
 			//String number2 = etxtNum2.getText().toString();
-			
-			 
-
-			
-
 			//int n1 = Integer.parseInt(number1);
 			//int n2 = Integer.parseInt(number2);
 			
